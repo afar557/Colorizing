@@ -5,9 +5,12 @@ import math
 from dataclasses import dataclass
 import matplotlib.pyplot as plt
 from copy import deepcopy
+from statistics import mode
 
+# NOTE: height and width are SWITCHED
+# NOTE: length of rightGrey is same as length of image??
 
-image = cv2.imread('ai_proj.jpg')
+image = cv2.imread('ai_proj_2.jpg')
 # print(image)
 # print(len(image), len(image[0]))
 # print(image[0][0])
@@ -30,7 +33,9 @@ def basicAgent(image):
     leftColoredImg = recolorLeft(deepcopy(image), colors)
 
     # Recolor the right side of the image
-    rightColoredImg = recolorRight(deepcopy(image), deepcopy(greyImg), leftColoredImg)
+    rightColoredImg = recolorRight(deepcopy(image), deepcopy(greyImg), leftColoredImg, colors)
+    plt.imshow(rightColoredImg)
+    plt.show()
 
 def greyScaleImg(image):
     for i in range(len(image)):
@@ -46,7 +51,7 @@ def recolorLeft(image, representativeColors):
     for i in range(len(leftSide)):
         for j in range(len(leftSide[0])):
             # Find the cluster that the current pixel belongs to by chosing the centroid closest to it
-            minDist = len(image)*len(image[0])
+            minDist = 255**3
             minDistColorInd = None
             for x in range(len(representativeColors)):
                 newDistance = euclidDist(representativeColors[x], leftSide[i][j])
@@ -60,15 +65,91 @@ def recolorLeft(image, representativeColors):
             leftSide[i][j][2] = representativeColors[minDistColorInd][2]
     return leftSide
 
-def recolorRight(image, greyImage, leftRepColor):
+def recolorRight(image, greyImage, leftRecolored, representativeColors):
     # Extract the right side of the grey image
     half = int(len(greyImage[0])/2)
     rightToColor = image[:,half:]
     rightGrey = greyImage[:,half:]
 
-    # Extract the right side of the grey image
+    # Extract the left side of the grey image
     leftGrey = greyImage[:,:half]
+    print('image:',len(image),"right:",len(rightGrey)/2)
+    for i in range(1,len(rightGrey)-1):
+        print(i)
+        for j in range(1,len(rightGrey[0])-1):
+            # get 3x3 gray patch from right side
+            rightPatch = np.array([ [rightGrey[i-1][j-1],rightGrey[i][j-1],rightGrey[i+1][j-1]],
+                                    [rightGrey[i-1][j],rightGrey[i][j],rightGrey[i+1][j]],
+                                    [rightGrey[i-1][j+1],rightGrey[i][j+1],rightGrey[i+1][j+1]]])
+            # rightPatch = rightGrey[i-1:i+2,j-1:j+2]
+            # for row in rightPatch:
+            #     print(row)
+            minDistances = [255**3]*6
+            minPatches = [None]*6
+            for x in range(1,len(leftGrey)-1):
+                for y in range(1,len(leftGrey[0])-1):
+                    leftPatch = np.array([  [leftGrey[x-1][y-1],leftGrey[x][y-1],leftGrey[x+1][y-1]],
+                                            [leftGrey[x-1][y],leftGrey[x][y],leftGrey[x+1][y]],
+                                            [leftGrey[x-1][y+1],leftGrey[x][y+1],leftGrey[x+1][y+1]]])
+                    # leftPatch = leftGrey[i-1:i+2,j-1:j+2]
+                    newDistance = euclidDist(rightPatch, leftPatch)
+                    if newDistance < minDistances[0]:
+                        minDistances.pop()
+                        minDistances.insert(0,newDistance)
+                        minPatches.pop()
+                        minPatches.insert(0,(x,y))
+                    elif newDistance < minDistances[1]:
+                        minDistances.pop()
+                        minDistances.insert(0,newDistance)
+                        minPatches.pop()
+                        minPatches.insert(0,(x,y))
+                    elif newDistance < minDistances[2]:
+                        minDistances.pop()
+                        minDistances.insert(0,newDistance)
+                        minPatches.pop()
+                        minPatches.insert(0,(x,y))
+                    elif newDistance < minDistances[3]:
+                        minDistances.pop()
+                        minDistances.insert(0,newDistance)
+                        minPatches.pop()
+                        minPatches.insert(0,(x,y))
+                    elif newDistance < minDistances[4]:
+                        minDistances.pop()
+                        minDistances.insert(0,newDistance)
+                        minPatches.pop()
+                        minPatches.insert(0,(x,y))
+                    elif newDistance < minDistances[5]:
+                        minDistances.pop()
+                        minDistances.insert(0,newDistance)
+                        minPatches.pop()
+                        minPatches.insert(0,(x,y))
+            # patchColors = []
+            # for patch in minPatches:
+            #     patchColors.append(leftRecolored[patch[0]][patch[1]])
+            # mostFrequent = mode(patchColors)
+            # cntr = 0
+            # for color in patchColors:
+            #     if color == mostFrequent:
+            #         cntr+=1
+            # if cntr > 3:
+            #     rightToColor[i][j] = mostFrequent
+            # else:
+            #     rightToColor[i][j] = patchColors[0]
 
+            colorCount = [0,0,0,0,0]
+            for i in range(len(representativeColors)):
+                for patch in minPatches:
+                    if (representativeColors[i][0] == leftRecolored[patch[0]][patch[1]][0]) and (representativeColors[i][1] == leftRecolored[patch[0]][patch[1]][1]) and (representativeColors[i][2] == leftRecolored[patch[0]][patch[1]][2]):
+                        colorCount[i] += 1
+            if max(colorCount) > 3:
+                index = colorCount.index(max(colorCount))
+                rightToColor[i][j][0] = representativeColors[index][0]
+                rightToColor[i][j][1] = representativeColors[index][1]
+                rightToColor[i][j][2] = representativeColors[index][2]
+            else:
+                rightToColor[i][j][0] = leftRecolored[minPatches[0][0]][minPatches[0][1]][0]
+                rightToColor[i][j][1] = leftRecolored[minPatches[0][0]][minPatches[0][1]][1]
+                rightToColor[i][j][2] = leftRecolored[minPatches[0][0]][minPatches[0][1]][2]
     return rightToColor
 
 def euclideanColorDist(a, b):
@@ -91,8 +172,8 @@ def kmeansColors(image):
         pixel = image[x][y]
         
         representativeColors.append(list(image[x][y]))
-    print("Representative Colors at the begining: ",representativeColors)
-    print()
+    # print("Representative Colors at the begining: ",representativeColors)
+    # print()
 
     # for each pixel in the image find the closest representative pixel in representativeColors
     # get an average of r,g,b values for each pixel closest to representative pixels in representativeColors
@@ -101,7 +182,7 @@ def kmeansColors(image):
 
     for i in range(len(image)):
         for j in range(len(image[0])):
-            minDist = len(image)*len(image[0])
+            minDist = 255**3
             minDistColorInd = None
             for x in range(len(representativeColors)):
                 newDistance = euclidDist(representativeColors[x], image[i][j])
@@ -135,8 +216,8 @@ def kmeansColors(image):
         if avgArray[i][2] != representativeColors[i][2]:
             representativeColors[i][2] = avgArray[i][2]
             # print("Replaced at line 83")
-    print() 
-    print("Representative Colors at the end: ",representativeColors)
+    # print() 
+    # print("Representative Colors at the end: ",representativeColors)
     return representativeColors
 
 basicAgent(image)
