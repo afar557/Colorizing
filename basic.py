@@ -10,7 +10,7 @@ from statistics import mode
 # NOTE: height and width are SWITCHED
 # NOTE: length of rightGrey is same as length of image??
 
-image = cv2.imread('ai_proj_2.jpg')
+image = cv2.imread('ai_proj_3.jpg')
 # print(image)
 # print(len(image), len(image[0]))
 # print(image[0][0])
@@ -73,7 +73,7 @@ def recolorRight(image, greyImage, leftRecolored, representativeColors):
 
     # Extract the left side of the grey image
     leftGrey = greyImage[:,:half]
-    print('image:',len(image),"right:",len(rightGrey)/2)
+    print('image:',len(image),"right:",len(rightGrey[0]))
     for i in range(1,len(rightGrey)-1):
         print(i)
         for j in range(1,len(rightGrey[0])-1):
@@ -137,16 +137,18 @@ def recolorRight(image, greyImage, leftRecolored, representativeColors):
             #     rightToColor[i][j] = patchColors[0]
 
             colorCount = [0,0,0,0,0]
-            for i in range(len(representativeColors)):
+            for k in range(len(representativeColors)):
                 for patch in minPatches:
-                    if (representativeColors[i][0] == leftRecolored[patch[0]][patch[1]][0]) and (representativeColors[i][1] == leftRecolored[patch[0]][patch[1]][1]) and (representativeColors[i][2] == leftRecolored[patch[0]][patch[1]][2]):
-                        colorCount[i] += 1
+                    if (representativeColors[k][0] == leftRecolored[patch[0]][patch[1]][0]) and (representativeColors[k][1] == leftRecolored[patch[0]][patch[1]][1]) and (representativeColors[k][2] == leftRecolored[patch[0]][patch[1]][2]):
+                        colorCount[k] += 1
             if max(colorCount) > 3:
+                # print("Recoloring at line 145 index : ",(i,j))
                 index = colorCount.index(max(colorCount))
                 rightToColor[i][j][0] = representativeColors[index][0]
                 rightToColor[i][j][1] = representativeColors[index][1]
                 rightToColor[i][j][2] = representativeColors[index][2]
             else:
+                # print("Recoloring at line 151 index : ",(i,j))
                 rightToColor[i][j][0] = leftRecolored[minPatches[0][0]][minPatches[0][1]][0]
                 rightToColor[i][j][1] = leftRecolored[minPatches[0][0]][minPatches[0][1]][1]
                 rightToColor[i][j][2] = leftRecolored[minPatches[0][0]][minPatches[0][1]][2]
