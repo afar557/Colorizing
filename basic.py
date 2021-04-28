@@ -10,7 +10,7 @@ from statistics import mode
 # NOTE: height and width are SWITCHED
 # NOTE: length of rightGrey is same as length of image??
 
-image = cv2.imread('ai_proj_3.jpg')
+image = cv2.imread('painting2.jpg')
 # print(image)
 # print(len(image), len(image[0]))
 # print(image[0][0])
@@ -34,7 +34,13 @@ def basicAgent(image):
 
     # Recolor the right side of the image
     rightColoredImg = recolorRight(deepcopy(image), deepcopy(greyImg), leftColoredImg, colors)
-    plt.imshow(rightColoredImg)
+
+    # Combine recolored left and recolored right
+    new = []
+    for i in range(0, len(leftColoredImg)):
+        new.append(list(leftColoredImg[i])+list(rightColoredImg[i]))
+
+    plt.imshow(new)
     plt.show()
 
 def greyScaleImg(image):
@@ -70,9 +76,18 @@ def recolorRight(image, greyImage, leftRecolored, representativeColors):
     half = int(len(greyImage[0])/2)
     rightToColor = image[:,half:]
     rightGrey = greyImage[:,half:]
-
     # Extract the left side of the grey image
     leftGrey = greyImage[:,:half]
+
+    # Get all patches from left side of grey image
+    leftPatches = []
+    for x in range(1,len(leftGrey)-1):
+        for y in range(1,len(leftGrey[0])-1):
+            leftPatch = np.array([  [leftGrey[x-1][y-1],leftGrey[x][y-1],leftGrey[x+1][y-1]],
+                                    [leftGrey[x-1][y],leftGrey[x][y],leftGrey[x+1][y]],
+                                    [leftGrey[x-1][y+1],leftGrey[x][y+1],leftGrey[x+1][y+1]]])
+            leftPatches.append(leftPatch)
+
     print('image:',len(image),"right:",len(rightGrey[0]))
     for i in range(1,len(rightGrey)-1):
         print(i)
@@ -86,43 +101,42 @@ def recolorRight(image, greyImage, leftRecolored, representativeColors):
             #     print(row)
             minDistances = [255**3]*6
             minPatches = [None]*6
-            for x in range(1,len(leftGrey)-1):
-                for y in range(1,len(leftGrey[0])-1):
-                    leftPatch = np.array([  [leftGrey[x-1][y-1],leftGrey[x][y-1],leftGrey[x+1][y-1]],
-                                            [leftGrey[x-1][y],leftGrey[x][y],leftGrey[x+1][y]],
-                                            [leftGrey[x-1][y+1],leftGrey[x][y+1],leftGrey[x+1][y+1]]])
-                    # leftPatch = leftGrey[i-1:i+2,j-1:j+2]
-                    newDistance = euclidDist(rightPatch, leftPatch)
-                    if newDistance < minDistances[0]:
-                        minDistances.pop()
-                        minDistances.insert(0,newDistance)
-                        minPatches.pop()
-                        minPatches.insert(0,(x,y))
-                    elif newDistance < minDistances[1]:
-                        minDistances.pop()
-                        minDistances.insert(0,newDistance)
-                        minPatches.pop()
-                        minPatches.insert(0,(x,y))
-                    elif newDistance < minDistances[2]:
-                        minDistances.pop()
-                        minDistances.insert(0,newDistance)
-                        minPatches.pop()
-                        minPatches.insert(0,(x,y))
-                    elif newDistance < minDistances[3]:
-                        minDistances.pop()
-                        minDistances.insert(0,newDistance)
-                        minPatches.pop()
-                        minPatches.insert(0,(x,y))
-                    elif newDistance < minDistances[4]:
-                        minDistances.pop()
-                        minDistances.insert(0,newDistance)
-                        minPatches.pop()
-                        minPatches.insert(0,(x,y))
-                    elif newDistance < minDistances[5]:
-                        minDistances.pop()
-                        minDistances.insert(0,newDistance)
-                        minPatches.pop()
-                        minPatches.insert(0,(x,y))
+
+            # Pick 1000 patches at random, find the best 6 among those
+            samples = random.sample(list(leftPatches), 1000)
+
+            for leftPatch in samples:
+                newDistance = euclidDist(rightPatch, leftPatch)
+                if newDistance < minDistances[0]:
+                    minDistances.pop()
+                    minDistances.insert(0,newDistance)
+                    minPatches.pop()
+                    minPatches.insert(0,(x,y))
+                elif newDistance < minDistances[1]:
+                    minDistances.pop()
+                    minDistances.insert(0,newDistance)
+                    minPatches.pop()
+                    minPatches.insert(0,(x,y))
+                elif newDistance < minDistances[2]:
+                    minDistances.pop()
+                    minDistances.insert(0,newDistance)
+                    minPatches.pop()
+                    minPatches.insert(0,(x,y))
+                elif newDistance < minDistances[3]:
+                    minDistances.pop()
+                    minDistances.insert(0,newDistance)
+                    minPatches.pop()
+                    minPatches.insert(0,(x,y))
+                elif newDistance < minDistances[4]:
+                    minDistances.pop()
+                    minDistances.insert(0,newDistance)
+                    minPatches.pop()
+                    minPatches.insert(0,(x,y))
+                elif newDistance < minDistances[5]:
+                    minDistances.pop()
+                    minDistances.insert(0,newDistance)
+                    minPatches.pop()
+                    minPatches.insert(0,(x,y))
             # patchColors = []
             # for patch in minPatches:
             #     patchColors.append(leftRecolored[patch[0]][patch[1]])
@@ -207,15 +221,15 @@ def kmeansColors(image):
         # print("avgarr: ",avgArray)
         # print()
         # check if r is same as avg r
-        if avgArray[i][0] != representativeColors[i][0]:
+        if abs(avgArray[i][0] - representativeColors[i][0])>5:
             representativeColors[i][0] = avgArray[i][0]
             # print("Replaced at line 75")
         # check if g is same as avg g
-        if avgArray[i][1] != representativeColors[i][1]:
+        if abs(avgArray[i][1] - representativeColors[i][1])>5:
             representativeColors[i][1] = avgArray[i][1]
             # print("Replaced at line 79")
         # check if b is same as avg b
-        if avgArray[i][2] != representativeColors[i][2]:
+        if abs(avgArray[i][2] - representativeColors[i][2])>5:
             representativeColors[i][2] = avgArray[i][2]
             # print("Replaced at line 83")
     # print() 
