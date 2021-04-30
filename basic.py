@@ -10,7 +10,7 @@ from statistics import mode
 # NOTE: height and width are SWITCHED
 # NOTE: length of rightGrey is same as length of image??
 
-image = cv2.imread('painting2.jpg')
+image = cv2.imread('palm2.webp')
 # print(image)
 # print(len(image), len(image[0]))
 # print(image[0][0])
@@ -86,7 +86,7 @@ def recolorRight(image, greyImage, leftRecolored, representativeColors):
             leftPatch = np.array([  [leftGrey[x-1][y-1],leftGrey[x][y-1],leftGrey[x+1][y-1]],
                                     [leftGrey[x-1][y],leftGrey[x][y],leftGrey[x+1][y]],
                                     [leftGrey[x-1][y+1],leftGrey[x][y+1],leftGrey[x+1][y+1]]])
-            leftPatches.append(leftPatch)
+            leftPatches.append([leftPatch,(x,y)])
 
     print('image:',len(image),"right:",len(rightGrey[0]))
     for i in range(1,len(rightGrey)-1):
@@ -106,7 +106,8 @@ def recolorRight(image, greyImage, leftRecolored, representativeColors):
             samples = random.sample(list(leftPatches), 1000)
 
             for leftPatch in samples:
-                newDistance = euclidDist(rightPatch, leftPatch)
+                newDistance = euclidDist(rightPatch, leftPatch[0])
+                x,y=leftPatch[1]
                 if newDistance < minDistances[0]:
                     minDistances.pop()
                     minDistances.insert(0,newDistance)
@@ -221,15 +222,15 @@ def kmeansColors(image):
         # print("avgarr: ",avgArray)
         # print()
         # check if r is same as avg r
-        if abs(avgArray[i][0] - representativeColors[i][0])>5:
+        if avgArray[i][0] != representativeColors[i][0]:
             representativeColors[i][0] = avgArray[i][0]
             # print("Replaced at line 75")
         # check if g is same as avg g
-        if abs(avgArray[i][1] - representativeColors[i][1])>5:
+        if avgArray[i][1] != representativeColors[i][1]:
             representativeColors[i][1] = avgArray[i][1]
             # print("Replaced at line 79")
         # check if b is same as avg b
-        if abs(avgArray[i][2] - representativeColors[i][2])>5:
+        if avgArray[i][2] != representativeColors[i][2]:
             representativeColors[i][2] = avgArray[i][2]
             # print("Replaced at line 83")
     # print() 
