@@ -1,0 +1,132 @@
+\documentclass{article}
+
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%=====================================================
+% Add PACKAGES Here (You typically would not need to):
+%=====================================================
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+%=====================================================
+% Ignore This Part (But Do NOT Delete It:)
+%=====================================================
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem*{fun}{Fun with Algorithms}
+\newtheorem*{challenge}{Challenge Yourself}
+\def\fline{\rule{0.75\linewidth}{0.5pt}}
+\newcommand{\finishline}{\vspace{-15pt}\begin{center}\fline\end{center}}
+\newtheorem*{solution*}{Solution}
+\newenvironment{solution}{\begin{solution*}}{{\finishline} \end{solution*}}
+\newcommand{\grade}[1]{\hfill{\textbf{($\mathbf{#1}$ points)}}}
+\newcommand{\thisdate}{\today}
+\newcommand{\thissemester}{\textbf{Rutgers: Spring 2021}}
+\newcommand{\thiscourse}{CS 440: Introduction to Artificial Intelligence} 
+\newcommand{\thishomework}{Number} 
+\newcommand{\thisname}{Name} 
+
+\newcommand{\thisheading}{
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { \textbf{\thiscourse \hfill \thissemester} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill Project \#\thishomework \hfill} }
+       \vspace{2mm}
+         \hbox to 6.28in { { \hfill \thisdate \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { \emph{Names: \thisname \hfill }}
+      \vspace{2mm}}
+      }
+   \end{center}
+   \bigskip
+}
+
+%=====================================================
+% Some useful MACROS (you can define your own in the same exact way also)
+%=====================================================
+
+
+\newcommand{\ceil}[1]{{\left\lceil{#1}\right\rceil}}
+\newcommand{\floor}[1]{{\left\lfloor{#1}\right\rfloor}}
+\newcommand{\prob}[1]{\Pr\paren{#1}}
+\newcommand{\expect}[1]{\Exp\bracket{#1}}
+\newcommand{\var}[1]{\textnormal{Var}\bracket{#1}}
+\newcommand{\set}[1]{\ensuremath{\left\{ #1 \right\}}}
+\newcommand{\poly}{\mbox{\rm poly}}
+
+
+%=====================================================
+% Fill Out This Part With Your Own Information:
+%=====================================================
+
+
+\renewcommand{\thishomework}{4: Colorizing} %Homework number
+\renewcommand{\thisname}{Aamna Farooq (af704), Nada Elshamaa(nhe12), and Asma Makhdoom(aam355)} % Your name
+ \graphicspath{ {./images/} }
+
+\begin{document}
+
+\thisheading
+
+\textbf{\Large The Basic Coloring Agent} \\
+ How good is the final result? How could you measure the quality of the final result? Is it numerically satisfying, if not visually? \\
+  
+ Bonus: Instead of doing a 5-nearest neighbor based color selection, what is the best number of representative colors to pick for your data? How did you arrive at that number? Justify yourself and be thorough. \\\\
+
+\textbf{\Large The Improved Agent} \\
+	\textbf{Specifications}
+	    Including description of input space, output space, model space, error / loss function, and learning algorithm \\\\
+    
+    \textbf{Parameters}
+        How did you choose the parameters (structure, weights, any decisions that needed to be made) for your model? \\\\
+        
+    \textbf{Pre-processing}
+        Any pre-processing of the input of output data that you used.\\\\
+        
+    \textbf{Training}
+        How did you handle training your model? How did you avoid overfitting? \\\\
+        
+    \textbf{Evaluation}
+        An evaluation of the quality of your model compared to the basic agent. How can you quantify and qualify the differences between their performance? How can you make sure that the comparison is 'fair'? \\\\
+        
+    \textbf{Improvements}
+        How might you improve your model with sufficient time, energy, and resources?\\\\
+\begin{solution} \hfill \\
+    
+\end{solution}
+\smallskip
+
+\textbf{\Large Bonus} \\
+    Research a ML framework like scikit-learn or tensorflow, and build a solution to this problem using this framework that beats your improved agent.
+\begin{solution} \hfill \\
+    
+\end{solution}
+\smallskip   
+
+\textbf{Work Distribution}
+\\
+The work is our own and not copied or taken from any other students. 
+\\\\
+To work on this project we would meet up over video calls daily and discuss problems and our solutions. One person would then screen share and code while the others would contribute and also assist in coding using the request remote control feature in zoom. We would alternate in screen sharing and upload to git for version control. 
+\\\\
+The report was done similarly. We each took on a plot and a question to complete on our own. We then met to complete the rest as a group over video call. 
+\\
+$Asma$ $Makhdoom:$ 
+\\
+$Aamna$ $Farooq:$ 
+\\
+$Nada$ $Elshamaa:$ 
+\\
+\smallskip
+
+\end{document}
