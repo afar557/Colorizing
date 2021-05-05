@@ -139,7 +139,12 @@
     \textbf{Pre-processing}
         Any pre-processing of the input of output data that you used.
         \begin{solution} \hfill \\
-    
+        
+        We pre-processed the input data by normalizing all the RGB values to be between 0 and 1 instead of between 0 and 255. This was important so that the value of alpha would not need to be too inflated and we would be able to reach a desirable result earlier. This was also important in ensuring the output values of the color were more distinct from one another and to ensure the RGB values were not close to one another.\\\\
+        We also pre-processed the data by converting the image into gray-scale using the equation provided: \\\\
+        Gray(r, g, b) = 0.21r + 0.72g + 0.07b \\\\
+        so that we could train the data using the gray-scale of the image. \\\\
+        We also split the image into two halves so that we can use the left side of the image to train our weights using the neural network. We then use the right side of the image to recolor the image using the weights we finalized from the training of the data. 
         \end{solution}\\\\
         
     \textbf{Training}
