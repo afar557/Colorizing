@@ -38,6 +38,8 @@ def basicAgent(imageName):
     plt.imshow(new)
     plt.show()
 
+    return new, image
+
 # Function that turns an image into grey scale
 def greyScaleImg(image):
     for i in range(len(image)):
