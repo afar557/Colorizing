@@ -81,39 +81,76 @@
 \textbf{\Large The Basic Coloring Agent} \\
  How good is the final result? How could you measure the quality of the final result? Is it numerically satisfying, if not visually? \\
  
- The final result seems pretty good visually considering that it is only based off a few representative colors. The basic agent is built by choosing 5 representative colors using Euclidean distance and k-means clustering. \\\\
- We start off by choosing 5 random points on the graph and using k-means and the Euclidean distance based on color we get more accurate 5 color points that accurately represent the colors of our data, as much as 5 colors possibly could. \\\\
- Using these 5 representative colors we recolor the left side of the image. We recolor each pixel using the color that is the smallest Euclidean distance in RGB values from the representative colors. To recolor the right side of the picture we take a look at the right and left side of the gray image. We store every possible patch from the left hand side. As we go through the right side of the gray image, we get a 3x3 patch from the right side and compare it to a sample of a thousand of the left gray image's patches to find the 6 most similar patches in terms of Euclidean distance. \\\\
+ The final result seems pretty impressive visually considering that it is only based off of a few representative colors. The basic agent is built by choosing 5 representative colors using Euclidean distance and k-means clustering. \\\\
+ We start off by choosing 5 random points on the image and using k-means and the Euclidean distance based on color until we get more accurate 5 color points that accurately represent the colors of our data, as much as 5 colors possibly could. \\\\
+ Using these 5 representative colors we recolor the left side of the image. We recolor each pixel using the color that is the smallest Euclidean distance in RGB values from a representative color. To recolor the right side of the picture we take a look at the right and left side of the gray image. We store every possible patch from the left hand side. As we go through the right side of the gray image, we get a 3x3 patch from the right side and compare it to a sample of a thousand of the left gray image's patches to find the 6 most similar patches in terms of Euclidean distance. \\\\
  Once we have located the 6 most similar patches, we use these patches to see if there is a majority recurring color in the middle pixels of these 6 patches. If there is a majority recurring color, we recolor the middle pixel of our current right patch to that color. If there is no majority then we set the color of the middle pixel of the right side to the color of the middle pixel of the most similar patch. \\\\
- The quality of the final result can be measured by comparing the Euclidean distances between the color we computed and the actual color value in the picture to get an idea of the accuracy of the program. \\\
- There are abnormalities in our image, such as pixelation near the edges of figures but as per our conversation with the Professor in office hours we were reassured this is a normal irregularity and not a point of concern with our image. The image is numerically satisfying because each color is based on our Euclidean color distance formula which ensures that we are picking the closest color possible to the actual color in the image. Therefore we feel the image is numerically and visually satisfying. 
+ The quality of the final result can be measured by comparing the Euclidean distances between the color we computed and the actual color value in the picture to get an idea of the accuracy of the program. We calculated this value to be an average of 222.8. The highest value for a euclidean distance for RGB values is 441.67 given the pixel values are as visually distinct as possible. Therefore this means that our basic algorithm performs at around 50\% similarity to the original image.\\\\
+ There are abnormalities in our image, such as pixelation near the edges of figures but as per our conversation with the Professor in office hours we were reassured this is a normal irregularity and not a point of concern with our image. The image is numerically satisfying because each color is based on our Euclidean color distance formula which ensures that we are picking the closest color possible to the actual color in the image. Therefore we feel the image is numerically and visually satisfying although there is room for improvement.
   
  Bonus: Instead of doing a 5-nearest neighbor based color selection, what is the best number of representative colors to pick for your data? How did you arrive at that number? Justify yourself and be thorough. \\\\
  The best number of representative colors to pick for our data would be 10 colors. We arrived at this number through trial and error where we felt the integrity of the initial image was still preserved and that it was producing the best detailed image. With higher numbers we felt that the result was not far enough visually that it would warrant increasing the number of representative colors. 
+ 
+ INSERT IMAGE OF 8 COLORS
 
 \textbf{\Large The Improved Agent} \\
+
 	\textbf{Specifications}
-	    Including description of input space, output space, model space, error / loss function, and learning algorithm 
-	    \begin{solution} \hfill \\
+	    Including description of input space, output space, model space, error / loss function, and learning algorithm \\
+        For the improved agent we used a neural network with 3 layers in order to accomplish recoloring the image. First we convert the image into the greyscale version. Similar to the basic agent, we use the left side of the greyscale image as the training data and the right side of the greyscale image as the test data.
+        The neural network is as follows: \\
         
-        \end{solution}\\\\
+        insert layer 1 \\
+        insert layer 2 \\
+        insert layer 3 \\
+        
+        Out1 is the input layer which is an array that holds the bias and 9 pixels from a 3x3 patch from the image, total of 10 elements. \\
+        Out2 represents the hidden layer that has 6 elements and holds 50 (5*10) weights. \\
+        Out3 represents the output layer and has 3 elements representing the output R, G, and B values and holds 18 weights. \\
+        
+        Train the model: \\
+        Initially we assign random values between 0 and 1 for the weights, which are stored in 2 separate matrices. Then we run the neural network by iterating through 3x3 patches randomly on the left hand side of the grey image starting with the random weights. Then we update the weights using stochastic gradient descent. we define the new weight value to be: \\
+        
+        Insert function for new weight value \\
+        
+        We continue to do this for 1000 iterations and check to see if the loss function has decreased. The loss function can be defined as:\\
+        
+        Insert loss function here \\
+        
+        If the loss has decreased by less than or equal to 5\% we stop and return the new adjusted weight values. Otherwise, we continue to the next 1000 patches until we can get to a point where the difference in loss is less than or equal to 5\%. Then we take the new computed weights to adjust the old weights. These new weights are then used to recolor the right side. In order to update the weights we had to take the partial derivative of the loss function with respect to weight which is as follows:\\
+        
+        Insert deriv eqns here\\
+        
+        Recolor Right Grey Image: \\
+        In order to recolor the right side of the grey image we iterate through 3x3 patches of it and plug each patch into the neural network using the weights computed through training. This returns the output layer with a new RGB value which we use to recolor the middle pixel of the patch. We continue for all patches on the right hand side of the grey image and display the final image. \\
+        
+        (All equations referenced in this above portion are inspired by the Professor's Example Notes on Canvas)
+        
+    \\\\
     
     \textbf{Parameters}
-        How did you choose the parameters (structure, weights, any decisions that needed to be made) for your model? 
-        \begin{solution} \hfill \\
-    
-        \end{solution}\\\\
+        How did you choose the parameters (structure, weights, any decisions that needed to be made) for your model? \\\\
+        Some parameters we used in the Improved Agent are alpha, having a bias for the input layer and hidden layer, iterating through 1000 patches at a time, and choosing to stop training when the difference in loss function changed by less than 5\%. \\\\
+        We chose these parameters through suggestions from the Professor but we fine tuned them through trial and error. For example for the alpha value, we initially used a value between 0 and 1 and this turned out to give us unsatisfactory results. So we decreased alpha until we saw significant improvements. \\\\
+        Similarly, for the 5\% value, we initially started with stopping the training once the difference in loss from the previous 1000 iterations was 10\%, but this proved to be too big, so we decreased it to 5\% which was better for our case. \\\\
+        We chose to iterate through 1000 patches at a time in order to be able to see if the loss function was decreasing and by how much. If the loss function was not decreasing after 1000 iterations, this tells us the our weights were suitable enough to be used to color the right side of the image. \\\\
+        The structure of our neural network was derived from the Professor's Example Network Notes on Canvas. This fit our use case perfectly because the input layer had nine elements which we used to represent the 9 pixels from the 3x3 patch. Also, the output layer represented RGB values which we used to recolor the middle pixel from the input patch. We chose to update our weights and to calculate the derivative of the loss functions with respect to weights using these notes.
         
     \textbf{Pre-processing}
         Any pre-processing of the input of output data that you used.
         \begin{solution} \hfill \\
-    
+        
+        We pre-processed the input data by normalizing all the RGB values to be between 0 and 1 instead of between 0 and 255. This was important so that the value of alpha would not need to be too inflated and we would be able to reach a desirable result earlier. This was also important in ensuring the output values of the color were more distinct from one another and to ensure the RGB values were not close to one another.\\\\
+        We also pre-processed the data by converting the image into gray-scale using the equation provided: \\\\
+        Gray(r, g, b) = 0.21r + 0.72g + 0.07b \\\\
+        so that we could train the data using the gray-scale of the image. \\\\
+        We also split the image into two halves so that we can use the left side of the image to train our weights using the neural network. We then use the right side of the image to recolor the image using the weights we finalized from the training of the data. 
         \end{solution}\\\\
         
     \textbf{Training}
         How did you handle training your model? How did you avoid overfitting? 
         \begin{solution} \hfill \\
-    
+        We start off the training by assigning random values between 0 and 1 for the weights. Then we train the neural network to produce more accurate weights using the left side
         \end{solution}\\\\
         
     \textbf{Evaluation}
