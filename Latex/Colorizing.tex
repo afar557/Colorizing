@@ -80,14 +80,22 @@
 
 \textbf{\Large The Basic Coloring Agent} \\
  How good is the final result? How could you measure the quality of the final result? Is it numerically satisfying, if not visually? \\
+ 
+ The final result seems pretty good visually considering that it is only based off a few representative colors. The basic agent is built by choosing 5 representative colors using Euclidean distance and k-means clustering. \\\\
+ We start off by choosing 5 random points on the graph and using k-means and the Euclidean distance based on color we get more accurate 5 color points that accurately represent the colors of our data, as much as 5 colors possibly could. \\\\
+ Using these 5 representative colors we recolor the left side of the image. We recolor each pixel using the color that is the smallest Euclidean distance in RGB values from the representative colors. To recolor the right side of the picture we take a look at the right and left side of the gray image. We store every possible patch from the left hand side. As we go through the right side of the gray image, we get a 3x3 patch from the right side and compare it to a sample of a thousand of the left gray image's patches to find the 6 most similar patches in terms of Euclidean distance. \\\\
+ Once we have located the 6 most similar patches, we use these patches to see if there is a majority recurring color in the middle pixels of these 6 patches. If there is a majority recurring color, we recolor the middle pixel of our current right patch to that color. If there is no majority then we set the color of the middle pixel of the right side to the color of the middle pixel of the most similar patch. \\\\
+ The quality of the final result can be measured by comparing the Euclidean distances between the color we computed and the actual color value in the picture to get an idea of the accuracy of the program. \\\
+ There are abnormalities in our image, such as pixelation near the edges of figures but as per our conversation with the Professor in office hours we were reassured this is a normal irregularity and not a point of concern with our image. The image is numerically satisfying because each color is based on our Euclidean color distance formula which ensures that we are picking the closest color possible to the actual color in the image. Therefore we feel the image is numerically and visually satisfying. 
   
  Bonus: Instead of doing a 5-nearest neighbor based color selection, what is the best number of representative colors to pick for your data? How did you arrive at that number? Justify yourself and be thorough. \\\\
+ The best number of representative colors to pick for our data would be 10 colors. We arrived at this number through trial and error where we felt the integrity of the initial image was still preserved and that it was producing the best detailed image. With higher numbers we felt that the result was not far enough visually that it would warrant increasing the number of representative colors. 
 
 \textbf{\Large The Improved Agent} \\
 	\textbf{Specifications}
 	    Including description of input space, output space, model space, error / loss function, and learning algorithm 
 	    \begin{solution} \hfill \\
-    
+        
         \end{solution}\\\\
     
     \textbf{Parameters}
