@@ -1,6 +1,7 @@
 import cv2
 from basic import basicAgent
 from improved import improvedAgent
+from numericAnal import getAvgDist
 
 def main():
     # Load in image
@@ -12,6 +13,9 @@ def main():
 
     # Call improved agent
     improvedAgent(image)
+
+    # Get the numerical analysis
+    print(getAvgDist(image))
 
 if __name__ == "__main__":
     main()
