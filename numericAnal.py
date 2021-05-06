@@ -1,4 +1,9 @@
-from basic import *
+from basic import basicAgent
+import numpy as np
+
+def euclidDist(a , b):
+    dist = np.linalg.norm(a-b)
+    return(dist)
 
 def getAvgDist(imageName):
     new, original = basicAgent(imageName)
@@ -10,4 +15,8 @@ def getAvgDist(imageName):
     # return euclidDist(new, original)
     return avg
 
-print(getAvgDist("ai_proj_2.jpg"))
+print(getAvgDist("aiai.jpg"))
+
+
+
+# print(euclidDist( np.array([255,255,255]), np.array([0,0,0]) ) )
