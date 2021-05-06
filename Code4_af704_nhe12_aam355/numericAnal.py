@@ -15,8 +15,4 @@ def getAvgDist(imageName):
     # return euclidDist(new, original)
     return avg
 
-print(getAvgDist("aiai.jpg"))
-
-
-
-# print(euclidDist( np.array([255,255,255]), np.array([0,0,0]) ) )
+print(getAvgDist("OgPic.jpg"))
