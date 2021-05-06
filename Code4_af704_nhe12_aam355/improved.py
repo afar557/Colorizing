@@ -53,7 +53,7 @@ def train(leftGrey, image):
     lossArr = []
     countArr = []
     sumLoss = 0
-    alpha = 0.01
+    alpha = 0.1
     while(True):
         # Pick a random patch from the left patches
         x = random.randint(0,len(leftPatches)-1)
@@ -87,7 +87,7 @@ def train(leftGrey, image):
             # countArr=[]
             avgLoss = sumLoss/1000
             change = abs((avgLoss - avgPrevLoss) / avgPrevLoss)
-            if change > .01:
+            if change > .05:
                 avgPrevLoss = avgLoss
                 cntr = 0
                 alpha=alpha/2
