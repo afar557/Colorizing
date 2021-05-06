@@ -10,4 +10,4 @@ def getAvgDist(imageName):
     # return euclidDist(new, original)
     return avg
 
-print(getAvgDist("ai_proj_2.jpg"))
+print(getAvgDist("OgPic.jpg"))

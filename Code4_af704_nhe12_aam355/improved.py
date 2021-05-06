@@ -204,5 +204,3 @@ def greyScaleImg(image):
         for j in range(len(image[0])):
             image[i][j] = 0.21*image[i][j][0] + 0.72*image[i][j][1] + 0.07*image[i][j][2]
     return np.array(image)
-
-improvedAgent("aiai.jpg")
