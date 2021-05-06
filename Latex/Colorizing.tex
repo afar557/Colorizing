@@ -117,6 +117,10 @@
         We continue to do this for 1000 iterations and check to see if the loss function has decreased. The loss function can be defined as:\\
         
         Insert loss function here \\
+        \begin{figure}[H]
+            \centering
+        	\IfFileExists{images/Loss2.png}{\includegraphics[width=0.8\textwidth]{images/Loss2.png}}{No Figure Yet}
+        \end{figure}
         
         If the loss has decreased by less than or equal to 5\% we stop and return the new adjusted weight values. Otherwise, we continue to the next 1000 patches until we can get to a point where the difference in loss is less than or equal to 5\%. Then we take the new computed weights to adjust the old weights. These new weights are then used to recolor the right side. In order to update the weights we had to take the partial derivative of the loss function with respect to weight which is as follows:\\
         
