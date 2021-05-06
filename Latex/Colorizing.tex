@@ -99,11 +99,12 @@
 	    Including description of input space, output space, model space, error / loss function, and learning algorithm \\
         For the improved agent we used a neural network with 3 layers in order to accomplish recoloring the image. First we convert the image into the greyscale version. Similar to the basic agent, we use the left side of the greyscale image as the training data and the right side of the greyscale image as the test data.
         The neural network is as follows: \\
-        
-        insert layer 1 \\
-        insert layer 2 \\
-        insert layer 3 \\
-        
+
+        \begin{figure}[H]
+            \centering
+        	\IfFileExists{images/Layers.png}{\includegraphics[width=0.8\textwidth]{images/Layers.png}}{No Figure Yet}
+        \end{figure}
+                
         Out1 is the input layer which is an array that holds the bias and 9 pixels from a 3x3 patch from the image, total of 10 elements. \\
         Out2 represents the hidden layer that has 6 elements and holds 50 (5*10) weights. \\
         Out3 represents the output layer and has 3 elements representing the output R, G, and B values and holds 18 weights. \\
@@ -116,6 +117,10 @@
         We continue to do this for 1000 iterations and check to see if the loss function has decreased. The loss function can be defined as:\\
         
         Insert loss function here \\
+        \begin{figure}[H]
+            \centering
+        	\IfFileExists{images/Loss2.png}{\includegraphics[width=0.8\textwidth]{images/Loss2.png}}{No Figure Yet}
+        \end{figure}
         
         If the loss has decreased by less than or equal to 5\% we stop and return the new adjusted weight values. Otherwise, we continue to the next 1000 patches until we can get to a point where the difference in loss is less than or equal to 5\%. Then we take the new computed weights to adjust the old weights. These new weights are then used to recolor the right side. In order to update the weights we had to take the partial derivative of the loss function with respect to weight which is as follows:\\
         
