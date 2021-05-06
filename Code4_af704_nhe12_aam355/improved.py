@@ -9,11 +9,7 @@ from statistics import mode
 import sys
 
 # Main function that runs the improved agent algorithm
-def improvedAgent(imageName):
-    # Import image
-    image = cv2.imread(imageName)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
+def improvedAgent(image):
     # Convert image to grey scale
     greyImg = greyScaleImg(deepcopy(image))
 
@@ -57,7 +53,7 @@ def train(leftGrey, image):
     lossArr = []
     countArr = []
     sumLoss = 0
-    alpha = 0.1
+    alpha = 0.01
     while(True):
         # Pick a random patch from the left patches
         x = random.randint(0,len(leftPatches)-1)
@@ -102,16 +98,7 @@ def train(leftGrey, image):
 
 # Function that produces random weights for the hidden and output layer
 def getRandWeights():
-    # out1W = [[0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0] , [0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
-    # for i in range(6):
-    #     for j in range(10):
-    #         out1W[i][j] = random.uniform(-0.1, 0.1)
     out1W = np.random.rand(6,10)
-
-    # out2W = [ [0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0] ]
-    # for i in range(3):
-    #     for j in range(6):
-    #         out2W[i][j] = random.uniform(-0.1, 0.1)
     out2W = np.random.rand(3,6)
     return out1W, out2W
 

@@ -12,11 +12,7 @@ from statistics import mode
 
 
 # Function that executes the basic agent
-def basicAgent(imageName):
-    # Import image
-    image = cv2.imread(imageName)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
+def basicAgent(image):
     # Convert image to grey scale
     greyImg = greyScaleImg(deepcopy(image))
 
