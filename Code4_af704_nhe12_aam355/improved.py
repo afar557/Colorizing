@@ -85,9 +85,9 @@ def train(leftGrey, image):
             # plt.show()
             # lossArr=[]
             # countArr=[]
-            avgLoss = sumLoss/1000
+            avgLoss = sumLoss/100000
             change = abs((avgLoss - avgPrevLoss) / avgPrevLoss)
-            if change > .05:
+            if change > .01:
                 avgPrevLoss = avgLoss
                 cntr = 0
                 alpha=alpha/2
