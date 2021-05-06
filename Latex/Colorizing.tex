@@ -94,8 +94,10 @@
   
  Bonus: Instead of doing a 5-nearest neighbor based color selection, what is the best number of representative colors to pick for your data? How did you arrive at that number? Justify yourself and be thorough. \\\\
  The best number of representative colors to pick for our data would be 10 colors. We arrived at this number through trial and error where we felt the integrity of the initial image was still preserved and that it was producing the best detailed image. With higher numbers we felt that the result was not far enough visually that it would warrant increasing the number of representative colors. 
- 
- INSERT IMAGE OF 8 COLORS
+  \begin{figure}[H]
+    \centering
+	\IfFileExists{images/8colors.png}{\includegraphics[width=0.5\textwidth]{images/8colors.png}}{No Figure Yet}
+ \end{figure}
 
 \textbf{\Large The Improved Agent} \\
 
@@ -121,7 +123,10 @@
         Train the model: \\
         Initially we assign random values between 0 and 1 for the weights, which are stored in 2 separate matrices. Then we run the neural network by iterating through 3x3 patches randomly on the left hand side of the grey image starting with the random weights. Then we update the weights using stochastic gradient descent. we define the new weight value to be: \\
         
-        Insert function for new weight value \\
+        \begin{figure}[H]
+            \centering
+        	\IfFileExists{images/NewWeight.png}{\includegraphics[width=0.4\textwidth]{images/NewWeight.png}}{No Figure Yet}
+        \end{figure}
         
         We continue to do this for 100,000 iterations keeping track of an average loss over the 100,000 patches and check to see if the loss function starts to plateau. The loss function can be defined as:\\
         
@@ -139,10 +144,6 @@
         \begin{figure}[H]
             \centering
         	\IfFileExists{images/Derv2.png}{\includegraphics[width=0.6\textwidth]{images/Derv2.png}}{No Figure Yet}
-        \end{figure}
-        \begin{figure}[H]
-            \centering
-        	\IfFileExists{images/NewWeight.png}{\includegraphics[width=0.45\textwidth]{images/NewWeight.png}}{No Figure Yet}
         \end{figure}
         
         Recolor Right Grey Image: \\
@@ -199,13 +200,16 @@
 \textbf{\Large Bonus} \\
     Why is a linear model a bad idea? 
     \begin{solution} \hfill \\
-    
+    The linear model would be a bad idea for this project because our desired output should be bound between 0 and 255. An example linear model is as follows:
+    \[w^1*x_1 + w^2*x_2 + ... + w^9*x_9\]
+    where $w^1$ through $w^9$ represents the weights and $x_1$ through $x_9$ represent the grey pixel values.\\
+    The issue is that this model is not bounded so the output values will be between $-\infty$ and $\infty$. This is not desirable because any values outside of the 0 to 255 range will give inaccurate RGB values. This is where the sigmoid function is important because it forces the output to be between 0 and 1 and then we multiply by 255 to get the output to be between 0 and 255.
     \end{solution}\\
     
-    Research a ML framework like scikit-learn or tensorflow, and build a solution to this problem using this framework that beats your improved agent.
-    \begin{solution} \hfill \\
+    \textbf{Acronym}:
+    N.N.A.P - Neural Network And Picture!\\
     
-    \end{solution}\\
+    This acronyms is very relevant to our project because we created a neural network and used it on a picture and are in desperate need of a nap after working on this for many many hours.
 
 \smallskip   
 
@@ -215,14 +219,7 @@ The work is our own and not copied or taken from any other students.
 \\\\
 To work on this project we would meet up over video calls daily and discuss problems and our solutions. One person would then screen share and code while the others would contribute and also assist in coding using the request remote control feature in zoom. We would alternate in screen sharing and upload to git for version control. 
 \\\\
-The report was done similarly. We each took on a plot and a question to complete on our own. We then met to complete the rest as a group over video call. 
-\\
-$Asma$ $Makhdoom:$ 
-\\
-$Aamna$ $Farooq:$ 
-\\
-$Nada$ $Elshamaa:$ 
-\\
+The report was done similarly. We met to complete it as a group over video call.
 \smallskip
 
 \end{document}
