@@ -1,3 +1,0 @@
-can u explain eqn 24 from example network pdf
-do we need to explicitly calcule the loss function?
-how do we use the model to train on the left side to color the right side?

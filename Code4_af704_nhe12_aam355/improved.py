@@ -9,11 +9,7 @@ from statistics import mode
 import sys
 
 # Main function that runs the improved agent algorithm
-def improvedAgent(imageName):
-    # Import image
-    image = cv2.imread(imageName)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
+def improvedAgent(image):
     # Convert image to grey scale
     greyImg = greyScaleImg(deepcopy(image))
 
@@ -89,7 +85,7 @@ def train(leftGrey, image):
             # plt.show()
             # lossArr=[]
             # countArr=[]
-            avgLoss = sumLoss/1000
+            avgLoss = sumLoss/100000
             change = abs((avgLoss - avgPrevLoss) / avgPrevLoss)
             if change > .01:
                 avgPrevLoss = avgLoss
@@ -102,16 +98,7 @@ def train(leftGrey, image):
 
 # Function that produces random weights for the hidden and output layer
 def getRandWeights():
-    # out1W = [[0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0] , [0,0,0,0,0,0,0,0,0,0], [0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]
-    # for i in range(6):
-    #     for j in range(10):
-    #         out1W[i][j] = random.uniform(-0.1, 0.1)
     out1W = np.random.rand(6,10)
-
-    # out2W = [ [0,0,0,0,0,0], [0,0,0,0,0,0], [0,0,0,0,0,0] ]
-    # for i in range(3):
-    #     for j in range(6):
-    #         out2W[i][j] = random.uniform(-0.1, 0.1)
     out2W = np.random.rand(3,6)
     return out1W, out2W
 
@@ -217,5 +204,3 @@ def greyScaleImg(image):
         for j in range(len(image[0])):
             image[i][j] = 0.21*image[i][j][0] + 0.72*image[i][j][1] + 0.07*image[i][j][2]
     return np.array(image)
-
-improvedAgent("aiai.jpg")
