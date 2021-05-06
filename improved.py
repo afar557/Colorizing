@@ -53,9 +53,10 @@ def train(leftGrey, image):
 
     # Pick  random patch and plug in patch into the model
     cntr = 0
-    prevLoss = sys.maxsize
+    avgPrevLoss = sys.maxsize
     lossArr = []
     countArr = []
+    sumLoss = 0
     alpha = 0.1
     while(True):
         # Pick a random patch from the left patches
@@ -80,15 +81,20 @@ def train(leftGrey, image):
         cntr += 1
         
         # One we run 1000 pixels, check the loss function to see if it has a 5% decrease and if so break, otherwise do 1000 more iterations
-        if cntr == 10000:
-            plt.plot(countArr, lossArr)
-            plt.show()
-            lossArr=[]
-            countArr=[]
-            change = abs(loss - prevLoss / prevLoss)
-            if change > .05:
-                prevLoss = loss
+        sumLoss += loss
+
+        print("current count: ", cntr)
+        if cntr == 100000:
+            # plt.plot(countArr, lossArr)
+            # plt.show()
+            # lossArr=[]
+            # countArr=[]
+            avgLoss = sumLoss/1000
+            change = abs((avgLoss - avgPrevLoss) / avgPrevLoss)
+            if change > .01:
+                avgPrevLoss = avgLoss
                 cntr = 0
+                alpha=alpha/2
                 continue
             else:
                 break
@@ -212,4 +218,4 @@ def greyScaleImg(image):
             image[i][j] = 0.21*image[i][j][0] + 0.72*image[i][j][1] + 0.07*image[i][j][2]
     return np.array(image)
 
-improvedAgent("ai_proj_2.jpg")
+improvedAgent("aiai.jpg")
