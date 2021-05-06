@@ -190,7 +190,9 @@
     \textbf{Improvements}
         How might you improve your model with sufficient time, energy, and resources?
         \begin{solution} \hfill \\
-    
+        One area where this model can be improved is by analyzing larger patch sizes. Currently our model looks at 3x3 patches at a time for the purposes of recoloring. Increasing our patch sizes can result in a better final result because it will be analyzing more data when it is using the training patches to finalize weights for the algorithm.\\\\ Another area where this model can be improved is by using multiple images to train our model to be more accurate. Currently our algorithm trains our model only on half of an image, this is a very isolated sample and has a high risk of discrepancies. Increasing the breadth of samples by training on multiple images would make our model more accurate. \\\\
+        Our current image is 256x256 pixels, we chose this size because we felt it was an amount that our computers could reasonably handle while still allowing us to be able to clearly discern changes in the image. Using pictures with a greater amount of pixels would create a better trained model that would then be more accurately be able to recolor the right side of the image. \\\\
+        Another area our model that can be improved is by using a graph to track when the loss function stops decreasing. Currently to achieve this purpose we average over increments of 100,000 and compare averages between increments to see if our loss function has stopped decreasing and we have reached a plateau. We could alternatively have done this using graphs to be able to visually discern if the loss function was no longer decreasing because averages have a certain margin of error which we hoped would be reduced with using a large number of averages. 
         \end{solution}\\\\
 \smallskip
 
