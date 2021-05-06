@@ -116,15 +116,25 @@
         
         We continue to do this for 100,000 iterations keeping track of an average loss over the 100,000 patches and check to see if the loss function starts to plateau. The loss function can be defined as:\\
         
-        Insert loss function here \\
         \begin{figure}[H]
             \centering
-        	\IfFileExists{images/Loss2.png}{\includegraphics[width=0.8\textwidth]{images/Loss2.png}}{No Figure Yet}
+        	\IfFileExists{images/Loss2.png}{\includegraphics[width=0.5\textwidth]{images/Loss2.png}}{No Figure Yet}
         \end{figure}
         
         If the loss has decreased by less than or equal to 1\% we stop and return the new adjusted weight values. Otherwise, we continue to the next 100,000 patches until we can get to a point where the difference in loss is less than or equal to 1\%. Then we take the new computed weights to adjust the old weights. These new weights are then used to recolor the right side. In order to update the weights we had to take the partial derivative of the loss function with respect to weight which is as follows:\\
         
-        Insert deriv eqns here\\
+        \begin{figure}[H]
+            \centering
+        	\IfFileExists{images/Derv1.png}{\includegraphics[width=0.6\textwidth]{images/Derv1.png}}{No Figure Yet}
+        \end{figure}
+        \begin{figure}[H]
+            \centering
+        	\IfFileExists{images/Derv2.png}{\includegraphics[width=0.6\textwidth]{images/Derv2.png}}{No Figure Yet}
+        \end{figure}
+        \begin{figure}[H]
+            \centering
+        	\IfFileExists{images/NewWeight.png}{\includegraphics[width=0.45\textwidth]{images/NewWeight.png}}{No Figure Yet}
+        \end{figure}
         
         Recolor Right Grey Image: \\
         In order to recolor the right side of the grey image we iterate through 3x3 patches of it and plug each patch into the neural network using the weights computed through training. This returns the output layer with a new RGB value which we use to recolor the middle pixel of the patch. We continue for all patches on the right hand side of the grey image and display the final image. \\
